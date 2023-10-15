@@ -1,12 +1,8 @@
 #openapi: 3.0.0
-#servers:
-  # Added by Swagger API
-#  - description: SwaggerHub Triage API
-#    url: https://virtserver.swaggerhub.com/palodaman/traigeMS/1.0.0
 #info:
 # version: "1.0.0"
 #  title: TraigeMS
-#description: The API for TriageMS
+#description: The API to determine Triage results based on a form
 
 import os,json
 

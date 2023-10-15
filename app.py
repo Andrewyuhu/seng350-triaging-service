@@ -46,20 +46,21 @@ def triageSymptoms():
               result = "Please visit the ER due to allergies and shortness of breath."
           else:
               result = "Visit a drug store for allergy medication."
+      elif symptomInput["chest_pain"]:
+        result = "Please visit the ER due to chest pain."
+      elif symptomInput["breathing_difficulty"]:
+        result = "Please visit the ER due to breathing difficulty."
       else:
-            if symptomInput["fever"]:
-                if symptomInput["cough"]:
-                    result = "You may have the flu. Consult a healthcare provider."
+          if symptomInput["fever"]:
+            if symptomInput["cough"]:
+                result = "You may have the flu. Consult a healthcare provider."
+            else:
+                if symptomInput["runny_nose"]:
+                    result = "You may have a common cold. Rest and fluids."
                 else:
-                    if symptomInput["runny_nose"]:
-                        result = "You may have a common cold. Rest and fluids."
-                    else:
-                        result = "You may have an infection. Consult a healthcare provider."
-                        
-   if symptomInput["chest_pain"]:
-       result = "Please visit the ER due to chest pain."
-   elif symptomInput["breathing_difficulty"]:
-       result = "Please visit the ER due to breathing difficulty."
+                    result = "You may have an infection. Consult a healthcare provider."
+
+   
 
   #  if (symptomInput["head_trauma"] == True):
   #     result = "Please visit ER for treatment"
@@ -68,7 +69,7 @@ def triageSymptoms():
   #  elif (symptomInput["inflamation"] == "moderate" or symptomInput["inflamation"] == "moderate"):
   #       result = "Please visit ER for further triage."
 
-   return json.dump({"result":result})
+   return {"result":result}
 
 
 

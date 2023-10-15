@@ -29,16 +29,32 @@ def index():
 
 @app.route('/triage', methods=["POST"])
 def triageSymptoms():
+   
    symptomInput = request.json # JSON Body
    result = "Please visit ER for further triage." # Default Triage Result
-  # Check the answers to determine the appropriate result
-   if symptomInput["pain_level"] >= 8:
+
+  # Pain Level 
+   if symptomInput["pain_level"] >= 7:
         result = "Please visit the ER for treatment."
    else:
+      
+      # Head Trauma
       if symptomInput["head_trauma"]:
           result = "Please visit the ER for evaluation."
+
+      # Inflammation
       elif symptomInput["inflammation"] in ["moderate", "severe"]:
           result = "Please visit the ER for further triage."
+
+      # Chest Pain
+      elif symptomInput["chest_pain"]:
+        result = "Please visit the ER due to chest pain."
+
+      # Breathing
+      elif symptomInput["breathing_difficulty"]:
+        result = "Please visit the ER due to breathing difficulty."
+
+      # Allergy Symptoms
       elif symptomInput["allergies"]:
           if symptomInput["runny_nose"] and symptomInput["sore_throat"]:
               result = "You may have seasonal allergies. Consider antihistamines."
@@ -46,10 +62,8 @@ def triageSymptoms():
               result = "Please visit the ER due to allergies and shortness of breath."
           else:
               result = "Visit a drug store for allergy medication."
-      elif symptomInput["chest_pain"]:
-        result = "Please visit the ER due to chest pain."
-      elif symptomInput["breathing_difficulty"]:
-        result = "Please visit the ER due to breathing difficulty."
+      
+      # Generic Cold Symptoms
       else:
           if symptomInput["fever"]:
             if symptomInput["cough"]:
@@ -59,15 +73,6 @@ def triageSymptoms():
                     result = "You may have a common cold. Rest and fluids."
                 else:
                     result = "You may have an infection. Consult a healthcare provider."
-
-   
-
-  #  if (symptomInput["head_trauma"] == True):
-  #     result = "Please visit ER for treatment"
-  #  elif (symptomInput["allergies"] == True):
-  #     result = "Visit drug store for allergy medicene"
-  #  elif (symptomInput["inflamation"] == "moderate" or symptomInput["inflamation"] == "moderate"):
-  #       result = "Please visit ER for further triage."
 
    return {"result":result}
 

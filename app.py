@@ -23,15 +23,16 @@ def index():
 
 @app.route('/triage', methods=["POST"])
 def triageSymptoms():
-    """Processes the form answers in JSON format and returns traige result
-        ---
-        post:
-          description: sends the form answers in json format to the flask server to determine triage result
+    
+    # Processes the form answers in JSON format and returns traige result
+    #     ---
+    #     post:
+    #       description: sends the form answers in json format to the flask server to determine triage result
 
-        responses:
-          200:
-            description: return triage  in the form of a 3 key dictionary
-    """
+    #     responses:
+    #       200:
+    #         description: return triage  in the form of a 3 key dictionary
+    
    symptomInput = request.json # JSON Body
    responseData = {"result":"Futher Triage Needed",
                    "cause":"na",

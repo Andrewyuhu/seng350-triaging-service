@@ -12,19 +12,11 @@ def index():
    return render_template('index.html')
 
 
-@app.route('/triage')
-def triageSymptoms():
-   symptomInput = {
-    "pain_level": 1,
-    "physical_pain": False,
-    "headache": True,
-    "sore_throat": False,
-    "runny_nose": True,
-    "allergies": False,
-    "inflamation": "none",
-    "head_trauma": True
-   }
+@app.route('/triage', methods=["POST"])
+def triageSymptoms(symptomInput):
+   
    result = "Please visit ER for further triage."
+
    if (symptomInput["head_trauma"] == True):
       result = "Please visit ER for treatment"
    elif (symptomInput["allergies"] == True):

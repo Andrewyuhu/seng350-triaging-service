@@ -11,22 +11,6 @@ def index():
    print('Request for index page received')
    return render_template('index.html')
 
-
-
-# example = {
-#     "pain_level":0,
-#     "head_trauma":False,
-#     "allergies":True,
-#     "runny_nose":True,
-#     "sore_throat":True,
-#     "shortness_breathe":True,
-#     "inflammation":"mild",
-#     "fever":True,
-#     "cough":True,
-#     "chest_pain":True,
-#     "difficult_breathing":True
-# }
-
 @app.route('/triage', methods=["POST"])
 def triageSymptoms():
    
@@ -42,7 +26,7 @@ def triageSymptoms():
       if symptomInput["head_trauma"]:
           result = "Please visit the ER for evaluation."
 
-      # Inflammation
+      # inflammation
       elif symptomInput["inflammation"] in ["moderate", "severe"]:
           result = "Please visit the ER for further triage."
 

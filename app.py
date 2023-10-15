@@ -11,5 +11,13 @@ def index():
    print('Request for index page received')
    return render_template('index.html')
 
+
+@app.route('/triage')
+def triageSymptoms():
+   return "successful loading page"
+
+
+
+
 if __name__ == '__main__':
    app.run()

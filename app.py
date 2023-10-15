@@ -13,10 +13,10 @@ def index():
 
 
 @app.route('/triage', methods=["POST"])
-def triageSymptoms(symptomInput):
+def triageSymptoms():
    
    result = "Please visit ER for further triage."
-
+   symptomInput = request.json
    if (symptomInput["head_trauma"] == True):
       result = "Please visit ER for treatment"
    elif (symptomInput["allergies"] == True):

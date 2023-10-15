@@ -8,57 +8,70 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-   print('Request for index page received')
    return render_template('index.html')
 
 @app.route('/triage', methods=["POST"])
 def triageSymptoms():
    
    symptomInput = request.json # JSON Body
-   result = "Please visit ER for further triage." # Default Triage Result
+   responseData = {"result":"Futher Triage Needed",
+                   "cause":"na",
+                   "medicine":"na"
+                  } # Default Triage Result
 
   # Pain Level 
    if symptomInput["pain_level"] >= 7:
-        result = "Please visit the ER for treatment."
+        responseData["result"] = "ER"
    else:
       
       # Head Trauma
       if symptomInput["head_trauma"]:
-          result = "Please visit the ER for evaluation."
+          responseData["result"] = "Futher Triage Needed"
 
       # inflammation
       elif symptomInput["inflammation"] in ["moderate", "severe"]:
-          result = "Please visit the ER for further triage."
+          responseData["result"] = "Futher Triage Needed"
+          responseData["cause"] = "Possible infection"
 
       # Chest Pain
       elif symptomInput["chest_pain"]:
-        result = "Please visit the ER due to chest pain."
+        responseData["result"] = "Futher Triage Needed"
+        responseData["cause"] = "Chest Pain"
 
       # Breathing
       elif symptomInput["breathing_difficulty"]:
-        result = "Please visit the ER due to breathing difficulty."
+        responseData["cause"] = "Difficulty Breathing"
+        responseData["result"] = "Futher Triage Needed"
 
       # Allergy Symptoms
       elif symptomInput["allergies"]:
           if symptomInput["runny_nose"] and symptomInput["sore_throat"]:
-              result = "You may have seasonal allergies. Consider antihistamines."
+              responseData["cause"] = "Possible Seasonal Allergies"
+              responseData["result"] = "Over the counter Medicine"
+              responseData["medicine"] = "Antihistamines"
+
           elif symptomInput["shortness_of_breath"]:
-              result = "Please visit the ER due to allergies and shortness of breath."
-          else:
-              result = "Visit a drug store for allergy medication."
+              responseData["cause"] = "Possible Allergy Reaction"
+              responseData["result"] = "ER"
       
       # Generic Cold Symptoms
       else:
           if symptomInput["fever"]:
             if symptomInput["cough"]:
-                result = "You may have the flu. Consult a healthcare provider."
+                responseData["cause"] = "Possible Cold / Flu"
+                responseData["result"] = "Over the counter Medicine"
+                responseData["medicine"] = "Cold FX"
             else:
                 if symptomInput["runny_nose"]:
-                    result = "You may have a common cold. Rest and fluids."
+                   responseData["cause"] = "Common Cold"
+                   responseData["result"] = "Over the counter Medicine"
+                   responseData["medicine"] = "Cold Medicine"
                 else:
-                    result = "You may have an infection. Consult a healthcare provider."
+                   responseData["cause"] = "Possible Infection"
+                   responseData["result"] = "Futher Triage Needed"
+            
 
-   return {"result":result}
+   return responseData
 
 
 

@@ -14,7 +14,25 @@ def index():
 
 @app.route('/triage')
 def triageSymptoms():
-   return "successful loading page"
+   symptomInput = {
+    "pain_level": 1,
+    "physical_pain": False,
+    "headache": True,
+    "sore_throat": False,
+    "runny_nose": True,
+    "allergies": False,
+    "inflamation": "none",
+    "head_trauma": True
+   }
+   result = "Please visit ER for further triage."
+   if (symptomInput["head_trauma"] == True):
+      result = "Please visit ER for treatment"
+   elif (symptomInput["allergies"] == True):
+      result = "Visit drug store for allergy medicene"
+   elif (symptomInput["inflamation"] == "moderate" or symptomInput["inflamation"] == "moderate"):
+        result = "Please visit ER for further triage."
+
+   return {"result":result}
 
 
 

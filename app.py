@@ -39,8 +39,8 @@ def triageSymptoms():
    responseData["apikey"] = environ.get("API_KEY");
    responseData["test"] = "test";
 
-   if (validateForm(symptomInput)):
-        return False
+   if (not validateForm(symptomInput)):
+        return {"failed":True};
 
   # Pain Level 
    if symptomInput["pain_level"] >= 7:

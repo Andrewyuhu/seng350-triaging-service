@@ -20,16 +20,7 @@ def index():
 
 @app.route('/triage', methods=["POST"])
 def triageSymptoms():
-    
-    # Processes the form answers in JSON format and returns traige result
-    #     ---
-    #     post:
-    #       description: sends the form answers in json format to the flask server to determine triage result
-
-    #     responses:
-    #       200:
-    #         description: return triage  in the form of a 3 key dictionary
-    
+   
    symptomInput = request.json # JSON Body
    responseData = {"result":"Futher Triage Needed",
                    "cause":"na",
@@ -42,7 +33,7 @@ def triageSymptoms():
    if (not validateForm(symptomInput)):
         return {"failed":True};
 
-  # Pain Level 
+  # Pain Level
    if symptomInput["pain_level"] >= 7:
         responseData["result"] = "ER"
    else:

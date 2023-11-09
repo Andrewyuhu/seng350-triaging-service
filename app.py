@@ -5,6 +5,7 @@
 #description: The API to determine Triage results based on a form
 
 import os,json
+from decouple import config
 from os import environ
 from triage import validateForm
 from flask import (Flask, redirect, render_template, request,
@@ -13,79 +14,36 @@ from flask import (Flask, redirect, render_template, request,
 app = Flask(__name__)
 
 
+API_KEY = config('API_KEY')
+
+formInput = {
+    "pain_level":9,
+    "allergies":True,
+    "runny_nose":True,
+    "sore_throat":True,
+    "shortness_of_breath":True,
+    "inflammation":"mild",
+    "fever":True,
+    "cough":True,
+    "chest_pain":True,
+    "breathing_difficulty":True
+}
+
+
+
 @app.route('/')
 def index():
    return render_template('index.html')
 
 
-@app.route('/triage', methods=["POST"])
+@app.route('/triage')
 def triageSymptoms():
-   
-   symptomInput = request.json # JSON Body
-   responseData = {"result":"Futher Triage Needed",
-                   "cause":"na",
-                   "medicine":"na"
-                  } # Default Triage Result
-   
-   responseData["apikey"] = environ.get("API_KEY");
-   responseData["test"] = "test";
+  if (not validateForm(formInput)):
+     return "Invalid Form"
+  else:
+     return "Continue Triage"
 
-   if (not validateForm(symptomInput)):
-        return {"failed":True};
-
-  # Pain Level
-   if symptomInput["pain_level"] >= 7:
-        responseData["result"] = "ER"
-   else:
-      
-      # Head Trauma
-      if symptomInput["head_trauma"]:
-          responseData["result"] = "Futher Triage Needed"
-
-      # inflammation
-      elif symptomInput["inflammation"] in ["moderate", "severe"]:
-          responseData["result"] = "Futher Triage Needed"
-          responseData["cause"] = "Possible infection"
-
-      # Chest Pain
-      elif symptomInput["chest_pain"]:
-        responseData["result"] = "Futher Triage Needed"
-        responseData["cause"] = "Chest Pain"
-
-      # Breathing
-      elif symptomInput["breathing_difficulty"]:
-        responseData["cause"] = "Difficulty Breathing"
-        responseData["result"] = "Futher Triage Needed"
-
-      # Allergy Symptoms
-      elif symptomInput["allergies"]:
-          if symptomInput["runny_nose"] and symptomInput["sore_throat"]:
-              responseData["cause"] = "Possible Seasonal Allergies"
-              responseData["result"] = "Over the counter Medicine"
-              responseData["medicine"] = "Antihistamines"
-
-          elif symptomInput["shortness_of_breath"]:
-              responseData["cause"] = "Possible Allergy Reaction"
-              responseData["result"] = "ER"
-      
-      # Generic Cold Symptoms
-      else:
-          if symptomInput["fever"]:
-            if symptomInput["cough"]:
-                responseData["cause"] = "Possible Cold / Flu"
-                responseData["result"] = "Over the counter Medicine"
-                responseData["medicine"] = "Cold FX"
-            else:
-                if symptomInput["runny_nose"]:
-                   responseData["cause"] = "Common Cold"
-                   responseData["result"] = "Over the counter Medicine"
-                   responseData["medicine"] = "Cold Medicine"
-                else:
-                   responseData["cause"] = "Possible Infection"
-                   responseData["result"] = "Futher Triage Needed"
-            
-
-   return responseData
 
 if __name__ == '__main__':
+   app.debug=True;
    app.run()

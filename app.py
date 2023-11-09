@@ -9,7 +9,7 @@
 #description: The API for TriageMS
 
 import os,json
-
+from os import environ
 from flask import (Flask, redirect, render_template, request,
                    send_from_directory, url_for)
 
@@ -32,13 +32,13 @@ def triageSymptoms():
     #     responses:
     #       200:
     #         description: return triage  in the form of a 3 key dictionary
-    
+   
    symptomInput = request.json # JSON Body
    responseData = {"result":"Futher Triage Needed",
                    "cause":"na",
                    "medicine":"na"
                   } # Default Triage Result
-
+   responseData["api_key"] = environ.get("API_KEY")
   # Pain Level 
    if symptomInput["pain_level"] >= 7:
         responseData["result"] = "ER"

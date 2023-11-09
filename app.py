@@ -1,12 +1,8 @@
 #openapi: 3.0.0
-#servers:
-  # Added by Swagger API
-#  - description: SwaggerHub Triage API
-#    url: https://virtserver.swaggerhub.com/palodaman/traigeMS/1.0.0
 #info:
 # version: "1.0.0"
 #  title: TraigeMS
-#description: The API for TriageMS
+#description: The API to determine Triage results based on a form
 
 import os,json
 from os import environ
@@ -32,13 +28,13 @@ def triageSymptoms():
     #     responses:
     #       200:
     #         description: return triage  in the form of a 3 key dictionary
-   
+    
    symptomInput = request.json # JSON Body
    responseData = {"result":"Futher Triage Needed",
                    "cause":"na",
                    "medicine":"na"
                   } # Default Triage Result
-   responseData["api_key"] = environ.get("API_KEY")
+
   # Pain Level 
    if symptomInput["pain_level"] >= 7:
         responseData["result"] = "ER"
@@ -92,7 +88,6 @@ def triageSymptoms():
             
 
    return responseData
-
 
 if __name__ == '__main__':
    app.run()

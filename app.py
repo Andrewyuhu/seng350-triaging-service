@@ -6,6 +6,7 @@
 
 import os,json
 from os import environ
+from triage import validateForm
 from flask import (Flask, redirect, render_template, request,
                    send_from_directory, url_for)
 
@@ -37,6 +38,10 @@ def triageSymptoms():
    
    responseData["apikey"] = environ.get("API_KEY");
    responseData["test"] = "test";
+
+   if (validateForm(symptomInput)):
+        return False
+
   # Pain Level 
    if symptomInput["pain_level"] >= 7:
         responseData["result"] = "ER"

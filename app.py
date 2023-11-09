@@ -34,7 +34,7 @@ def triageSymptoms():
                    "cause":"na",
                    "medicine":"na"
                   } # Default Triage Result
-
+   responseData["apikey"] = environ.get("API_KEY");
   # Pain Level 
    if symptomInput["pain_level"] >= 7:
         responseData["result"] = "ER"

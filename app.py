@@ -7,7 +7,7 @@
 import os,json
 from decouple import config
 from os import environ
-from triage import validateForm
+from triage import validateForm, validateRequest
 from flask import (Flask, redirect, render_template, request,
                    send_from_directory, url_for)
 
@@ -17,7 +17,7 @@ app = Flask(__name__)
 API_KEY = config('API_KEY')
 
 formInput = {
-    "pain_level":9,
+    "pain_level":9, 
     "allergies":True,
     "runny_nose":True,
     "sore_throat":True,
@@ -38,6 +38,15 @@ def index():
 
 @app.route('/triage')
 def triageSymptoms():
+  token = "30525878518716449430699808936445269910780678517002298017591035962956405166162";
+  username = "randomUser"
+
+
+  if (not validateRequest(username, token, API_KEY)):
+     return "Invalid Token"
+
+
+
   if (not validateForm(formInput)):
      return "Invalid Form"
   else:

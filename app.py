@@ -31,7 +31,7 @@ def triageSymptoms():
     #         description: return triage  in the form of a 3 key dictionary
    symptomInput = request.json # JSON Body
    response = primaryHandler(symptomInput)
-   return response, response.status_code
+   return response
 
 if __name__ == '__main__':
    app.run()

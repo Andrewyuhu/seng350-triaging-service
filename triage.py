@@ -82,7 +82,6 @@ def triageResults (symptomInput :dict):
                 else:
                    responseData["cause"] = "Possible Infection"
                    responseData["result"] = "Futher Triage Needed"
-            
-
+   
    return responseData,200
  

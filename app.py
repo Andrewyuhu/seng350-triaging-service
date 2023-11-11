@@ -29,7 +29,6 @@ def triageSymptoms():
     #     responses:
     #       200:
     #         description: return triage  in the form of a 3 key dictionary
-    
    symptomInput = request.json # JSON Body
    response = primaryHandler(symptomInput)
    return response, response.status_code

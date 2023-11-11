@@ -4,7 +4,7 @@ from os import environ
 VALIDATE_URL = "https://fr1gi6xdtc.execute-api.us-west-2.amazonaws.com/prod/validate"
 
 def primaryHandler (form : dict):
-   if (not validateForm):
+   if (not validateForm(form)):
       return "Invalid Form",400
    elif (not validateRequest(form.get("username"), form.get("token"))):
       return "Invalid Login", 400

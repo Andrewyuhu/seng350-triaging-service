@@ -33,5 +33,10 @@ def triageSymptoms():
    response = primaryHandler(symptomInput)
    return response
 
+
+@app.route('/heartbeart', methods=["GET"])
+def heartbeart():
+   return "End point reachable",200
+
 if __name__ == '__main__':
    app.run()

@@ -5,30 +5,12 @@
 #description: The API to determine Triage results based on a form
 
 import os,json
-from decouple import config
 from os import environ
-from triage import validateForm, validateRequest
+from triage import primaryHandler
 from flask import (Flask, redirect, render_template, request,
                    send_from_directory, url_for)
 
 app = Flask(__name__)
-
-
-API_KEY = config('API_KEY')
-
-formInput = {
-    "pain_level":9, 
-    "allergies":True,
-    "runny_nose":True,
-    "sore_throat":True,
-    "shortness_of_breath":True,
-    "inflammation":"mild",
-    "fever":True,
-    "cough":True,
-    "chest_pain":True,
-    "breathing_difficulty":True
-}
-
 
 
 @app.route('/')
@@ -38,21 +20,36 @@ def index():
 
 @app.route('/triage')
 def triageSymptoms():
-  token = "30525878518716449430699808936445269910780678517002298017591035962956405166162";
-  username = "randomUser"
+    
+    # Processes the form answers in JSON format and returns traige result
+    #     ---
+    #     post:
+    #       description: sends the form answers in json format to the flask server to determine triage result
 
+    #     responses:
+    #       200:
+    #         description: return triage  in the form of a 3 key dictionary
+   #symptomInput = request.json # JSON Body
 
-  if (not validateRequest(username, token, API_KEY)):
-     return "Invalid Token"
+   symptomInput = {
+      "username":"randomUser1",
+     "token":"106600925603790991061627252300948002515041739375360403758811620986295048214325",
+     "pain_level":0,
+     "head_trauma":False,
+     "allergies":True,
+     "runny_nose":True,
+     "sore_throat":True,
+     "shortness_of_breath":False,
+     "inflammation":"mild",
+     "fever":False,
+     "cough":False,
+     "chest_pain":False,
+     "breathing_difficulty":False
+  }
 
-
-
-  if (not validateForm(formInput)):
-     return "Invalid Form"
-  else:
-     return "Continue Triage"
-
+   response = primaryHandler(symptomInput)
+   return response
 
 if __name__ == '__main__':
-   app.debug=True;
+   app.debug = True
    app.run()

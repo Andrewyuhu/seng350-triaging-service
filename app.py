@@ -34,7 +34,7 @@ def triageSymptoms():
    return response
 
 
-@app.route('/heartbeart')
+@app.route('/heartbeat', methods=["GET"])
 def heartbeart():
    return "End point reachable",200
 
